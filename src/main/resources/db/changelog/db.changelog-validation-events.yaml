@@ -1,0 +1,69 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-validation-events
+      author: codex
+      changes:
+        - createTable:
+            tableName: validation_events
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: request_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: executed_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: model_type
+                  type: VARCHAR(255)
+              - column:
+                  name: external_id
+                  type: VARCHAR(255)
+              - column:
+                  name: status
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: retry_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: data
+                  type: JSONB
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: validation_events
+            indexName: idx_validation_events_request_id
+            columns:
+              - column:
+                  name: request_id
+        - createIndex:
+            tableName: validation_events
+            indexName: idx_validation_events_status
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            tableName: validation_events
+            indexName: idx_validation_events_retry_at
+            columns:
+              - column:
+                  name: retry_at
